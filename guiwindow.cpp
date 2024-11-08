@@ -2274,20 +2274,22 @@ void guiWindow::serialPort_readyRead()
             }
         }
     } else if(testMode) {
-        QString testBuffer = serialPort.readLine();
-        if(testBuffer.contains(',')) {
-            QStringList coordsList = testBuffer.remove("\r\n").split(',', Qt::SkipEmptyParts);
+        if (serialPort.canReadLine()) {
+            QString testBuffer = serialPort.readLine();
+            if(testBuffer.contains(',')) {
+                QStringList coordsList = testBuffer.remove("\r\n").split(',', Qt::SkipEmptyParts);
 
-            testPointTL.setRect(coordsList[0].toInt()-25, coordsList[1].toInt()-25, 50, 50);
-            testPointTR.setRect(coordsList[2].toInt()-25, coordsList[3].toInt()-25, 50, 50);
-            testPointBL.setRect(coordsList[4].toInt()-25, coordsList[5].toInt()-25, 50, 50);
-            testPointBR.setRect(coordsList[6].toInt()-25, coordsList[7].toInt()-25, 50, 50);
-            testPointMed.setRect(coordsList[8].toInt()-25,coordsList[9].toInt()-25, 50, 50);
-            testPointD.setRect(coordsList[10].toInt()-25, coordsList[11].toInt()-25, 50, 50);
+                testPointTL.setRect(coordsList[0].toInt()-25, coordsList[1].toInt()-25, 50, 50);
+                testPointTR.setRect(coordsList[2].toInt()-25, coordsList[3].toInt()-25, 50, 50);
+                testPointBL.setRect(coordsList[4].toInt()-25, coordsList[5].toInt()-25, 50, 50);
+                testPointBR.setRect(coordsList[6].toInt()-25, coordsList[7].toInt()-25, 50, 50);
+                testPointMed.setRect(coordsList[8].toInt()-25,coordsList[9].toInt()-25, 50, 50);
+                testPointD.setRect(coordsList[10].toInt()-25, coordsList[11].toInt()-25, 50, 50);
 
-            QPolygonF poly;
-            poly << QPointF(coordsList[0].toInt(), coordsList[1].toInt()) << QPointF(coordsList[2].toInt(), coordsList[3].toInt()) << QPointF(coordsList[6].toInt(), coordsList[7].toInt()) << QPointF(coordsList[4].toInt(), coordsList[5].toInt()) << QPointF(coordsList[0].toInt(), coordsList[1].toInt());
-            testBox.setPolygon(poly);
+                QPolygonF poly;
+                poly << QPointF(coordsList[0].toInt(), coordsList[1].toInt()) << QPointF(coordsList[2].toInt(), coordsList[3].toInt()) << QPointF(coordsList[6].toInt(), coordsList[7].toInt()) << QPointF(coordsList[4].toInt(), coordsList[5].toInt()) << QPointF(coordsList[0].toInt(), coordsList[1].toInt());
+                testBox.setPolygon(poly);
+            }
         }
     }
 }
